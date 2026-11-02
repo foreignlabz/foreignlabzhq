@@ -28,7 +28,7 @@ async function limitedBody(request: Request, max: number): Promise<Uint8Array> {
 
 export function createDriveService(deps: Dependencies = {}) {
   const env = deps.env ?? process.env; const fetcher = deps.fetcher ?? fetch;
-  function enabled() { if (env.HQ_DRIVE_ENABLED !== 'true') throw new DriveError(503, 'Google Drive is not connected. Local preview files stay in this browser session.'); }
+  function enabled() { if (env.HQ_STAGING_DEMO === 'true' || env.HQ_DRIVE_ENABLED !== 'true') throw new DriveError(503, 'Google Drive is not connected. Local preview files stay in this browser session.'); }
   function configuration() {
     enabled();
     for (const key of ['HQ_GOOGLE_CLIENT_ID', 'HQ_GOOGLE_CLIENT_SECRET', 'HQ_GOOGLE_REFRESH_TOKEN', 'HQ_UPLOAD_ENCRYPTION_KEY', 'HQ_SUPABASE_SERVICE_ROLE_KEY']) if (!env[key]) throw new DriveError(503, 'Drive server configuration is incomplete.');

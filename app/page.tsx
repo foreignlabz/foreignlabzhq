@@ -1,2 +1,3 @@
 import Workspace from '@/components/workspace';
-export default function Page(){return <Workspace/>;}
+import WorkspaceLogin from '@/components/workspace-login';
+export default function Page(){return process.env.HQ_STAGING_DEMO==='true'?<WorkspaceLogin preview/>:<Workspace/>;}

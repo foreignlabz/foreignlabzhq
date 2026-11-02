@@ -1,0 +1,102 @@
+{
+  "executedAt": "2026-11-02T19:00:07.951Z",
+  "baseUrl": "http://127.0.0.1:3001",
+  "build": "Next.js production build, started by verify-staging.mjs with staging enabled and Drive flag deliberately true",
+  "browser": "154.0.8037.57",
+  "dataMode": "Synthetic demo; original screenshot paths must serve generated SVG artwork; live integrations blocked at proxy",
+  "credentials": "Ephemeral credentials supplied only through environment; never written to evidence",
+  "assertions": 392,
+  "passed": 7,
+  "failed": 0,
+  "scenarios": [
+    {
+      "name": "Anonymous pages, media, app shell, and APIs require authentication",
+      "status": "passed",
+      "assertions": 47,
+      "durationMs": 137,
+      "blockedExternalRequests": [],
+      "browserErrors": [],
+      "liveApiAttempts": [],
+      "error": null
+    },
+    {
+      "name": "Incorrect preview credentials do not grant access",
+      "status": "passed",
+      "assertions": 4,
+      "durationMs": 92,
+      "blockedExternalRequests": [],
+      "browserErrors": [],
+      "liveApiAttempts": [],
+      "error": null
+    },
+    {
+      "name": "Authenticated root and auth callbacks render design-only login",
+      "status": "passed",
+      "assertions": 60,
+      "durationMs": 759,
+      "blockedExternalRequests": [],
+      "browserErrors": [],
+      "liveApiAttempts": [],
+      "error": null
+    },
+    {
+      "name": "Original feed paths serve synthetic SVGs behind access control",
+      "status": "passed",
+      "assertions": 124,
+      "durationMs": 142,
+      "blockedExternalRequests": [],
+      "browserErrors": [],
+      "liveApiAttempts": [],
+      "error": null
+    },
+    {
+      "name": "Staging proxy blocks every tested API even with Drive enabled",
+      "status": "passed",
+      "assertions": 59,
+      "durationMs": 111,
+      "blockedExternalRequests": [],
+      "browserErrors": [],
+      "liveApiAttempts": [],
+      "error": null
+    },
+    {
+      "name": "Production-build review flow desktop",
+      "status": "passed",
+      "assertions": 49,
+      "durationMs": 4198,
+      "blockedExternalRequests": [],
+      "browserErrors": [],
+      "liveApiAttempts": [],
+      "error": null
+    },
+    {
+      "name": "Production-build review flow mobile",
+      "status": "passed",
+      "assertions": 49,
+      "durationMs": 2583,
+      "blockedExternalRequests": [],
+      "browserErrors": [],
+      "liveApiAttempts": [],
+      "error": null
+    }
+  ],
+  "screenshots": [
+    "docs/evidence/staging-login-desktop.png",
+    "docs/evidence/staging-week-desktop.png",
+    "docs/evidence/staging-today-desktop.png",
+    "docs/evidence/staging-month-desktop.png",
+    "docs/evidence/staging-feed-future-desktop.png",
+    "docs/evidence/staging-feed-current-desktop.png",
+    "docs/evidence/staging-login-mobile.png",
+    "docs/evidence/staging-week-mobile.png",
+    "docs/evidence/staging-today-mobile.png",
+    "docs/evidence/staging-month-mobile.png",
+    "docs/evidence/staging-feed-future-mobile.png",
+    "docs/evidence/staging-feed-current-mobile.png"
+  ],
+  "limitations": [
+    "Loopback production-build verification does not establish a hosted deployment or public URL.",
+    "Google OAuth, live Supabase data, and Google Drive are intentionally disabled in staging.",
+    "Mobile viewport emulation is not physical iPhone/Safari verification."
+  ]
+}

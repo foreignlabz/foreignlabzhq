@@ -33,3 +33,7 @@ The separate `npm run test:auth-browser` suite exercises the real Supabase SDK w
 - `auth-flow-cancelled.png`: cancelled callback with safe recovery and sanitized URL.
 
 The protocol runner does not insert auth storage manually; the real SDK persists its session after the intercepted token exchange. Google/Supabase endpoints never receive these test requests. All 24 current screenshots are separate from historical archive evidence.
+
+## Protected synthetic staging captures
+
+`staging-{login,today,week,month,feed-current,feed-future}-{desktop,mobile}.png` are 12 actual captures from a password-protected local production build. This mode uses synthetic records **and** generated artwork; original screenshot-reference assets are replaced. The seven staging scenarios and 392 assertions pass. See `../staging-browser-results.json` and `../staging-preview.md`. These captures demonstrate the prepared application, not a live hosted URL or physical iPhone test.

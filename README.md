@@ -17,14 +17,9 @@ Use `/preview/` or `/demo/` for the fictional workspace. These modes require no 
 
 The root route `/` uses the Supabase adapter, and `/auth/callback/` handles its OAuth return. Do not use demo role controls as evidence that live authentication or database permissions work.
 
-To test a production build locally:
+To verify a protected synthetic staging build locally, run `npm run test:staging`. It generates temporary credentials in memory, builds and starts a loopback server, verifies desktop/mobile workflows and private access, captures screenshots, then stops the server. The normal production start does not honor the development bypass.
 
-```bash
-npm run build
-HQ_LOCAL_DEVELOPMENT=true npm run start -- --port 3000
-```
-
-`HQ_LOCAL_DEVELOPMENT` is only for loopback development. External requests fail closed unless the private-preview gate is configured. No public preview is deployed by these commands.
+For a separate shareable iPhone preview, follow [the exact Netlify draft setup](docs/staging-preview.md). This creates a new empty hosting project and a password-protected draft deployment; it does not replace the HQ2 Site or publish production.
 
 ## Checks
 

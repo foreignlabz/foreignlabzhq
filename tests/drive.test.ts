@@ -41,6 +41,12 @@ test('Drive is disabled by default and performs no network call', async () => {
   await assert.rejects(service.begin(new Request('http://localhost/api/drive/uploads', {method: 'POST'})), (e: DriveError) => e.status === 503);
   assert.equal(called, false);
 });
+test('synthetic staging disables Drive before authentication even if credentials are configured',async()=>{
+  let touched=false;
+  const service=createDriveService({env:{...env,HQ_STAGING_DEMO:'true'},authenticate:async()=>{touched=true;return context([]);},fetcher:async()=>{touched=true;throw new Error('No provider calls allowed');}});
+  await assert.rejects(service.begin(new Request('http://localhost/api/drive/uploads',{method:'POST'})),(error:DriveError)=>error.status===503);
+  assert.equal(touched,false);
+});
 test('missing authentication and read-only roles cannot upload', async () => {
   await assert.rejects(createDriveService({env}).begin(new Request('http://localhost', {method: 'POST'})), (e: DriveError) => e.status === 401);
   const service = createDriveService({env, authenticate: async () => context([], 'brand_member')});

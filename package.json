@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "node scripts/dev.mjs",
     "build": "next build",
+    "build:staging": "node scripts/build-staging.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test --test-isolation=none tests/*.test.ts",
@@ -12,7 +13,9 @@
     "start": "next start --hostname 127.0.0.1",
     "test:security": "node supabase/tests/run-embedded.mjs",
     "test:browser": "node scripts/browser-qa.cjs",
-    "test:auth-browser": "node scripts/auth-browser-qa.cjs"
+    "test:auth-browser": "node scripts/auth-browser-qa.cjs",
+    "test:staging": "node scripts/verify-staging.mjs",
+    "test:staging-host": "node scripts/verify-hosted-staging.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",
@@ -22,6 +25,7 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.13",
+    "@netlify/plugin-nextjs": "5.16.5",
     "@types/node": "^24.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

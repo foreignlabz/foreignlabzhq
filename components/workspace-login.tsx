@@ -35,7 +35,7 @@ export default function WorkspaceLogin({busy=false,error,issue,forbidden=false,p
           <button className="hq3-oauth" disabled aria-describedby="chatgpt-availability"><HQIcon name="spark"/>Continue with ChatGPT<span className="hq3-unavailable">Unavailable</span></button>
           <p id="chatgpt-availability" className="hq3-auth-note">ChatGPT sign-in is not available for this workspace.</p>
         </div>}
-        {preview&&<p className="hq3-auth-note">Design preview · sign-in is disabled here.</p>}
+        {preview&&<><p className="hq3-auth-note">Design preview · sign-in is disabled here.</p><Link className="hq3-btn hq3-primary hq3-demo-entry" href="/preview/">Explore demo workspace<HQIcon name="arrow" size={17}/></Link></>}
         <div className="hq3-login-foot"><HQIcon name="lock" size={14}/><span>Invite-only. Your workspace stays private.</span></div>
       </section>
     </div>

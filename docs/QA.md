@@ -9,7 +9,7 @@ Verified on 2026-11-02 in the isolated Codex development environment. These resu
 | Locked application dependency installation | Passed (`npm ci`); browser/SQL test dependencies subsequently pinned in the lockfile. |
 | `npm run lint` | Passed, no errors or warnings. |
 | `npm run typecheck` | Passed. |
-| `npm test` | 80 tests passed; 0 failed, skipped, cancelled, or todo. |
+| `npm test` | 84 tests passed; 0 failed, skipped, cancelled, or todo. |
 | `npm run test:security` | 129 PostgreSQL assertions passed: 44 historical, 36 roles/progress, 14 Drive metadata, 35 private registration. |
 | `npm run build` | Passed with Next.js 16.4.3, including TypeScript and server routes. |
 | Browser QA | 17 scenarios, 202 assertions passed; 0 failed. |
@@ -19,7 +19,7 @@ Verified on 2026-11-02 in the isolated Codex development environment. These resu
 
 Node.js 24.19.0, npm 11.9.0, React 19.2.4, Playwright 1.62.1, system Chromium, and PGlite 0.5.13 were used. SQL tests execute only in an isolated in-memory PostgreSQL engine and roll back their fixtures. No test account or schema was created in the hosted project.
 
-The runner uses `--test-isolation=none` because this environment's default Node/tsx child isolation initially reported file-level results instead of individual tests. The final run explicitly executed all 80 named tests. Restricted subprocess execution also prevented the first development bind and Next TypeScript child process; authorized execution resolved those environment failures without disabling type checks or package verification.
+The runner uses `--test-isolation=none` because this environment's default Node/tsx child isolation initially reported file-level results instead of individual tests. The final run explicitly executed all 84 named tests. Restricted subprocess execution also prevented the first development bind and Next TypeScript child process; authorized execution resolved those environment failures without disabling type checks or package verification.
 
 ## Browser behavior verified
 
@@ -56,3 +56,9 @@ No shared hosted preview exists. The development server is loopback-only; hosted
 GitHub API access is denied by the environment proxy, so pull-request creation is blocked. Required GitHub/Supabase/Google network additions and reusable installation/startup instructions were saved in an environment draft. Saving that draft did not apply runtime networking or publish an environment snapshot or application.
 
 No merge into main, production deployment, production Site edit, Dragon Ball Hunt project edit, live migration, or original-file deletion occurred.
+
+## Separate synthetic staging preparation
+
+`npm run test:staging` builds and runs the actual production server locally using temporary credentials kept in memory. All seven scenarios and 392 assertions pass, with 12 fresh desktop/mobile screenshots. It tests anonymous denial for pages, actual JS assets and app-shell files; protected Login → Calendar Today/Week/Month → Feed views; synthetic image rewrites; CSP; and API denial even with the Drive enable flag deliberately set. The root/callback pages also select visual-only login at build time in staging, independently of proxy rewrites. Generated Netlify output is excluded from source lint/type checking.
+
+The pinned Netlify adapter's offline build completed Next.js compilation and server-function packaging but failed during Edge bundling because download access is blocked. Direct probes to the Netlify API and Deno/Edge download endpoints returned proxy tunnel403. This is not a successful hosted deployment. No account/project/deployment was created. Follow [the exact separate draft setup](staging-preview.md); the hosted verification command remains unrun until an actual URL and authorized hosting access exist.

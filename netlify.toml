@@ -1,8 +1,17 @@
-# Historical static-export configuration is preserved in docs/recovered/netlify.toml.
-# This app now requires a Node server for private preview access and Drive routes.
-# Fail closed until a private, authenticated development host is explicitly configured.
+# Separate draft staging only. Historical export config: docs/recovered/netlify.toml.
+# Do not connect production domains or enable Git auto-publishing for this project.
 [build]
-  command = "node -e \"console.error('Automatic deployment disabled: configure an authorized private development preview.'); process.exit(1)\""
+  command = "npm run build:staging"
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "24"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Credentials and these two flags must also be configured in the new site's secure
+# environment, ALL deploy contexts, for both Builds and Functions. TOML alone is not runtime config.
+[context.deploy-preview.environment]
+  HQ_STAGING_DEMO = "true"
+  HQ_DRIVE_ENABLED = "false"
