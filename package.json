@@ -11,7 +11,8 @@
     "check": "npm run lint && npm run typecheck && npm test && npm run build",
     "start": "next start --hostname 127.0.0.1",
     "test:security": "node supabase/tests/run-embedded.mjs",
-    "test:browser": "node scripts/browser-qa.cjs"
+    "test:browser": "node scripts/browser-qa.cjs",
+    "test:auth-browser": "node scripts/auth-browser-qa.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",

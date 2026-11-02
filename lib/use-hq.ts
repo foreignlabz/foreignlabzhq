@@ -2,6 +2,7 @@
 import {useCallback,useEffect,useState,useRef} from 'react';
 import {DemoRepository} from './demo-repository';
 import type {AuthState,HQRepository,Media,PostInput,Role,Snapshot,TaskProgress} from './types';
+import {classifyAuthIssue,withAuthDeadline,WORKSPACE_LOAD_TIMEOUT_MS,type AuthIssue} from './auth-flow';
 
 type LoadTicket={epoch:number;version:number};
 /** Coordinates initial loads, refreshes, and logout without retaining private data. */
@@ -18,8 +19,9 @@ export class HQRequestGate {
   accepts(ticket:LoadTicket):boolean {return this.active(ticket.epoch)&&ticket.version===this.version;}
 }
 function authStatus(error:unknown):AuthState {
-  const code=(error as {code?:string})?.code;
-  return code==='SIGNED_OUT'?'signed_out':code==='FORBIDDEN'?'forbidden':'error';
+  const issue=classifyAuthIssue(error);
+  if(!issue||issue.kind==='cancelled'||issue.kind==='expired')return 'signed_out';
+  return issue.kind==='forbidden'||issue.kind==='unverified'?'forbidden':'error';
 }
 export function useHQ(forceDemo=false) {
   const configured=!forceDemo;
@@ -27,11 +29,17 @@ export function useHQ(forceDemo=false) {
   const [data,setData]=useState<Snapshot|null>(null);
   const [status,setStatus]=useState<AuthState>('loading');
   const [error,setError]=useState<string|null>(null);
+  const [authIssue,setAuthIssue]=useState<AuthIssue|null>(null);
+  const [setupAttempt,setSetupAttempt]=useState(0);
   const [busy,setBusy]=useState(false);
   const pending=useRef(false);
   const logoutPending=useRef(false);
   const requests=useRef(new HQRequestGate());
   const mode=configured?'production' as const:'demo' as const;
+  const reportAuthFailure=useCallback((failure:unknown)=>{
+    const issue=classifyAuthIssue(failure);
+    setData(null);setAuthIssue(issue);setError(issue?.message??null);setStatus(authStatus(failure));
+  },[]);
 
   useEffect(()=>{
     let alive=true;
@@ -42,23 +50,23 @@ export function useHQ(forceDemo=false) {
       let ticket:LoadTicket|null=null;
       try {
         let repository:HQRepository;
-        if(configured){const {createSupabaseRepository}=await import('./supabase-repository');repository=createSupabaseRepository();}
+        if(configured){const {createSupabaseRepository}=await withAuthDeadline(import('./supabase-repository'));repository=createSupabaseRepository();}
         else repository=new DemoRepository();
         if(!alive||!gate.active(epoch))return;
         setRepo(repository);setData(null);setStatus('loading');setBusy(false);
         ticket=gate.beginLoad();
         if(!ticket)return;
-        const snapshot=await repository.load();
-        if(alive&&gate.accepts(ticket)){setData(snapshot);setStatus('ready');setError(null);}
+        const snapshot=await withAuthDeadline(repository.load(),WORKSPACE_LOAD_TIMEOUT_MS);
+        if(alive&&gate.accepts(ticket)){setData(snapshot);setStatus('ready');setError(null);setAuthIssue(null);}
       }catch(e){
         if(alive&&gate.active(epoch)&&(!ticket||gate.accepts(ticket))){
-          setData(null);setError(authStatus(e)==='signed_out'?null:e instanceof Error?e.message:'Configuración no válida.');setStatus(authStatus(e));
+          reportAuthFailure(e);
         }
       }
     }
     void setup();
     return ()=>{alive=false;gate.close();};
-  },[configured]);
+  },[configured,setupAttempt,reportAuthFailure]);
 
   const refresh=useCallback(async():Promise<boolean>=>{
     if(!repo)return false;
@@ -66,14 +74,14 @@ export function useHQ(forceDemo=false) {
     const ticket=gate.beginLoad();
     if(!ticket)return false;
     try{
-      const snapshot=await repo.load();
+      const snapshot=await withAuthDeadline(repo.load(),WORKSPACE_LOAD_TIMEOUT_MS);
       if(!gate.accepts(ticket))return false;
-      setData(snapshot);setStatus('ready');setError(null);return true;
+      setData(snapshot);setStatus('ready');setError(null);setAuthIssue(null);return true;
     }catch(e){
       if(!gate.accepts(ticket))return false;
-      setData(null);setStatus(authStatus(e));setError(authStatus(e)==='signed_out'?null:e instanceof Error?e.message:'No se pudo cargar HQ.');return false;
+      reportAuthFailure(e);return false;
     }
-  },[repo]);
+  },[repo,reportAuthFailure]);
 
   useEffect(()=>{
     if(!repo||repo.mode!=='production')return;
@@ -103,7 +111,15 @@ export function useHQ(forceDemo=false) {
   }
 
   return {
-    mode,status,data,error,busy,refresh,clearError:()=>setError(null),
+    mode,status,data,error,authIssue,busy,refresh,clearError:()=>setError(null),
+    retry:async():Promise<boolean>=>{
+      if(pending.current||!requests.current.active(requests.current.current()))return false;
+      setError(null);setAuthIssue(null);setStatus('loading');
+      if(!repo){setSetupAttempt(attempt=>attempt+1);return false;}
+      const epoch=requests.current.current();pending.current=true;setBusy(true);
+      try{return await refresh();}
+      finally{if(requests.current.matches(epoch)){pending.current=false;setBusy(false);}}
+    },
     savePost:(input:PostInput)=>run(()=>repo!.savePost(input)),
     saveProgress:(id:string,progress:TaskProgress)=>run(()=>repo!.saveProgress(id,progress)),
     getAccessToken:async()=>{
@@ -131,9 +147,9 @@ export function useHQ(forceDemo=false) {
     signInWithGoogle:async()=>{
       if(!repo||pending.current)return;
       const gate=requests.current;const epoch=gate.open();
-      pending.current=true;setBusy(true);setError(null);
+      pending.current=true;setBusy(true);setError(null);setAuthIssue(null);
       try{await repo.signInWithGoogle();}
-      catch(e){if(gate.active(epoch))setError(e instanceof Error?e.message:'Google sign-in could not start.');}
+      catch(e){if(gate.active(epoch))reportAuthFailure(e);}
       finally{if(gate.matches(epoch)){pending.current=false;setBusy(false);}}
     },
     signOut:async()=>{
@@ -141,9 +157,9 @@ export function useHQ(forceDemo=false) {
       const gate=requests.current;const epoch=gate.close();
       // Logout takes precedence even if a mutation or initial load is still pending.
       logoutPending.current=true;pending.current=true;
-      setBusy(true);setData(null);setStatus('signed_out');setError(null);
+      setBusy(true);setData(null);setStatus('signed_out');setError(null);setAuthIssue(null);
       try{await repo.signOut();}
-      catch(e){if(gate.matches(epoch))setError(e instanceof Error?e.message:'No se pudo cerrar sesión.');}
+      catch(e){if(gate.matches(epoch)){const issue=classifyAuthIssue(e);setAuthIssue(issue?{...issue,retry:'switch_account'}:null);setError(issue?.message??'Sign-out could not finish. Please try again.');}}
       finally{if(gate.matches(epoch)){logoutPending.current=false;pending.current=false;setBusy(false);}}
       // Remain closed after errors too: background refresh must not restore a session.
       // Explicit sign-in opens a new generation; a late old response stays invalid.

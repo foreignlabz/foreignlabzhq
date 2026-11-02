@@ -1,0 +1,1048 @@
+{
+  "executedAt": "2026-11-02T18:20:13.339Z",
+  "baseUrl": "http://127.0.0.1:3000",
+  "browser": "154.0.8037.57",
+  "filter": null,
+  "authenticationEvidence": "MOCK PROTOCOL ONLY: real app + real Supabase JS SDK; Google authorize, token exchange, getUser, membership, and calendar responses intercepted. No live provider or database access. Auth storage is populated only by the SDK after its intercepted PKCE exchange.",
+  "assertions": 826,
+  "passed": 8,
+  "failed": 0,
+  "scenarios": [
+    {
+      "name": "Verified Google protocol to Calendar and logout desktop",
+      "status": "passed",
+      "assertions": 291,
+      "durationMs": 4202,
+      "authorizeCount": 1,
+      "tokenExchangeCount": 1,
+      "pkceVerifierMatched": true,
+      "userVerificationCount": 8,
+      "logoutCount": 1,
+      "interceptedRequests": [
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/authorize"
+        },
+        {
+          "method": "POST",
+          "pathname": "/auth/v1/token"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "POST",
+          "pathname": "/auth/v1/logout"
+        }
+      ],
+      "unexpectedRequests": [],
+      "protocolErrors": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Verified Google protocol to Calendar and logout mobile",
+      "status": "passed",
+      "assertions": 292,
+      "durationMs": 3443,
+      "authorizeCount": 1,
+      "tokenExchangeCount": 1,
+      "pkceVerifierMatched": true,
+      "userVerificationCount": 8,
+      "logoutCount": 1,
+      "interceptedRequests": [
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/authorize"
+        },
+        {
+          "method": "POST",
+          "pathname": "/auth/v1/token"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "POST",
+          "pathname": "/auth/v1/logout"
+        }
+      ],
+      "unexpectedRequests": [],
+      "protocolErrors": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Uninvited verified user cannot self-promote through editable metadata",
+      "status": "passed",
+      "assertions": 39,
+      "durationMs": 1433,
+      "authorizeCount": 1,
+      "tokenExchangeCount": 1,
+      "pkceVerifierMatched": true,
+      "userVerificationCount": 4,
+      "logoutCount": 1,
+      "interceptedRequests": [
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/authorize"
+        },
+        {
+          "method": "POST",
+          "pathname": "/auth/v1/token"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "POST",
+          "pathname": "/auth/v1/logout"
+        }
+      ],
+      "unexpectedRequests": [],
+      "protocolErrors": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Unverified provider identity is denied",
+      "status": "passed",
+      "assertions": 18,
+      "durationMs": 952,
+      "authorizeCount": 1,
+      "tokenExchangeCount": 1,
+      "pkceVerifierMatched": true,
+      "userVerificationCount": 4,
+      "logoutCount": 0,
+      "interceptedRequests": [
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/authorize"
+        },
+        {
+          "method": "POST",
+          "pathname": "/auth/v1/token"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        }
+      ],
+      "unexpectedRequests": [],
+      "protocolErrors": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Cancelled callback is recoverable and sanitized",
+      "status": "passed",
+      "assertions": 9,
+      "durationMs": 878,
+      "authorizeCount": 0,
+      "tokenExchangeCount": 0,
+      "pkceVerifierMatched": false,
+      "userVerificationCount": 0,
+      "logoutCount": 0,
+      "interceptedRequests": [],
+      "unexpectedRequests": [],
+      "protocolErrors": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Orphan callback code fails safely without a verifier",
+      "status": "passed",
+      "assertions": 9,
+      "durationMs": 517,
+      "authorizeCount": 0,
+      "tokenExchangeCount": 0,
+      "pkceVerifierMatched": false,
+      "userVerificationCount": 0,
+      "logoutCount": 0,
+      "interceptedRequests": [],
+      "unexpectedRequests": [],
+      "protocolErrors": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Expired exchange is recoverable and provider diagnostics are hidden",
+      "status": "passed",
+      "assertions": 18,
+      "durationMs": 1753,
+      "authorizeCount": 1,
+      "tokenExchangeCount": 1,
+      "pkceVerifierMatched": true,
+      "userVerificationCount": 0,
+      "logoutCount": 0,
+      "interceptedRequests": [
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/authorize"
+        },
+        {
+          "method": "POST",
+          "pathname": "/auth/v1/token"
+        }
+      ],
+      "unexpectedRequests": [],
+      "protocolErrors": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Workspace transport failure retries without repeating OAuth",
+      "status": "passed",
+      "assertions": 150,
+      "durationMs": 9074,
+      "authorizeCount": 1,
+      "tokenExchangeCount": 1,
+      "pkceVerifierMatched": true,
+      "userVerificationCount": 7,
+      "logoutCount": 0,
+      "interceptedRequests": [
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/authorize"
+        },
+        {
+          "method": "POST",
+          "pathname": "/auth/v1/token"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/auth/v1/user"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspaces"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/workspace_members"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/accounts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_posts"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/post_comments"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/weekly_visions"
+        },
+        {
+          "method": "GET",
+          "pathname": "/rest/v1/content_post_progress"
+        }
+      ],
+      "unexpectedRequests": [],
+      "protocolErrors": [],
+      "browserErrors": [],
+      "error": null
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "docs/evidence/auth-flow-calendar-desktop.png",
+      "provenance": "Real application and Supabase browser SDK; all provider/database HTTP responses are synthetic intercepted fixtures, never live Google/Supabase."
+    },
+    {
+      "path": "docs/evidence/auth-flow-signed-out-desktop.png",
+      "provenance": "Real application and Supabase browser SDK; all provider/database HTTP responses are synthetic intercepted fixtures, never live Google/Supabase."
+    },
+    {
+      "path": "docs/evidence/auth-flow-calendar-mobile.png",
+      "provenance": "Real application and Supabase browser SDK; all provider/database HTTP responses are synthetic intercepted fixtures, never live Google/Supabase."
+    },
+    {
+      "path": "docs/evidence/auth-flow-signed-out-mobile.png",
+      "provenance": "Real application and Supabase browser SDK; all provider/database HTTP responses are synthetic intercepted fixtures, never live Google/Supabase."
+    },
+    {
+      "path": "docs/evidence/auth-flow-uninvited-denied.png",
+      "provenance": "Real application and Supabase browser SDK; all provider/database HTTP responses are synthetic intercepted fixtures, never live Google/Supabase."
+    },
+    {
+      "path": "docs/evidence/auth-flow-cancelled.png",
+      "provenance": "Real application and Supabase browser SDK; all provider/database HTTP responses are synthetic intercepted fixtures, never live Google/Supabase."
+    }
+  ],
+  "limitations": [
+    "Does not verify live Google provider enablement, authorized redirect configuration, external credentials, deployed RLS, or actual production user membership.",
+    "Chromium mobile emulation is not a physical iPhone/Safari test."
+  ]
+}

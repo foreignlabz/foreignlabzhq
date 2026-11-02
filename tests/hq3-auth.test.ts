@@ -117,7 +117,7 @@ test('Google provider failure is surfaced without fake authentication',async()=>
   const original=Object.getOwnPropertyDescriptor(globalThis,'window');
   Object.defineProperty(globalThis,'window',{configurable:true,value:{location:{origin:'https://hq-preview.example'}}});
   try {
-    const client={auth:{signInWithOAuth:async()=>({error:{message:'Provider disabled'}})}} as unknown as SupabaseClient;
-    await assert.rejects(new SupabaseRepository(client).signInWithGoogle(),/proveedor/);
+    const client={auth:{signInWithOAuth:async()=>({error:{code:'provider_disabled',message:'Provider disabled'}})}} as unknown as SupabaseClient;
+    await assert.rejects(new SupabaseRepository(client).signInWithGoogle(),{code:'AUTH_FLOW'});
   } finally {if(original)Object.defineProperty(globalThis,'window',original);else Reflect.deleteProperty(globalThis,'window');}
 });

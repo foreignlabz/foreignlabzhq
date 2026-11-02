@@ -3,8 +3,9 @@ import type {HQRepository,Snapshot,Member,Account,Post,PostInput,Comment,Vision,
 import {weekStart} from './dates';
 import {publicSupabaseConfig} from './public-config';
 import {validatePost,validateComment,validateMedia,canEditPost,assertCanWrite,validateProgress} from './validation';
+import {asAuthFlowError,authIssue,classifyAuthIssue,HQAuthFlowError,createAuthStartup,createBoundedAuthFetch,withAuthDeadline,type AuthStartup} from './auth-flow';
 const BUCKET='hq-media';
-export class HQAccessError extends Error {constructor(public code:'SIGNED_OUT'|'FORBIDDEN',message:string){super(message);this.name='HQAccessError';}}
+export class HQAccessError extends Error {constructor(public code:'SIGNED_OUT'|'FORBIDDEN',message:string,public reason?:'unverified'){super(message);this.name='HQAccessError';}}
 type Row=Record<string,unknown>;
 type BackendError={message:string;code?:string}|null;
 function str(value:unknown):string{return typeof value==='string'?value:'';}
@@ -23,11 +24,16 @@ function mapComment(row:Row):Comment{return {id:str(row.id),postId:str(row.post_
 function mapVision(row:Row):Vision{return {id:str(row.id),weekStart:str(row.week_start),text:str(row.text),updatedAt:str(row.updated_at)};}
 export class SupabaseRepository implements HQRepository {
   readonly mode='production' as const;
-  constructor(private client:SupabaseClient){}
+  constructor(private client:SupabaseClient,private startup?:AuthStartup){}
   async context():Promise<{workspaceId:string;member:Member}> {
-    const {data:{user},error}=await this.client.auth.getUser();
-    if(error||!user)throw new HQAccessError('SIGNED_OUT','Inicia sesión con una cuenta autorizada.');
-    if(!user.email_confirmed_at)throw new HQAccessError('FORBIDDEN','La identidad debe tener un correo verificado.');
+    await this.startup?.wait();
+    const {data:{user},error}=await withAuthDeadline(this.client.auth.getUser());
+    if(error){
+      if(error.name==='AuthSessionMissingError')throw new HQAccessError('SIGNED_OUT','Inicia sesión con una cuenta autorizada.');
+      throw asAuthFlowError(error);
+    }
+    if(!user)throw new HQAccessError('SIGNED_OUT','Inicia sesión con una cuenta autorizada.');
+    if(!user.email_confirmed_at)throw new HQAccessError('FORBIDDEN','La identidad debe tener un correo verificado.','unverified');
     const result=await this.client.from('workspace_members').select('workspace_id,user_id,name,role').eq('user_id',user.id);
     fail(result.error);
     if(!result.data?.length)throw new HQAccessError('FORBIDDEN','Tu cuenta no tiene acceso a este HQ. El owner debe autorizar tu membresía.');
@@ -91,22 +97,24 @@ export class SupabaseRepository implements HQRepository {
   async signIn():Promise<void>{throw new Error('Usa Continuar con Google para iniciar sesión.');}
   async signInWithGoogle():Promise<void>{
     if(typeof window==='undefined')throw new Error('Abre el inicio de sesión en el navegador.');
-    const result=await this.client.auth.signInWithOAuth({provider:'google',options:{redirectTo:new URL('/auth/callback/',window.location.origin).href,queryParams:{prompt:'select_account'}}});
-    if(result.error)throw new Error('No se pudo iniciar Google. Revisa el proveedor y las URLs autorizadas de Supabase.');
+    const result=await withAuthDeadline(this.client.auth.signInWithOAuth({provider:'google',options:{redirectTo:new URL('/auth/callback/',window.location.origin).href,queryParams:{prompt:'select_account'}}}),undefined,'google');
+    if(result.error){const issue=classifyAuthIssue(result.error);throw new HQAuthFlowError(issue?.kind==='unknown'?authIssue('configuration'):issue??authIssue('configuration'));}
   }
   async getAccessToken():Promise<string|null>{const {data,error}=await this.client.auth.getSession();fail(error);return data.session?.access_token??null;}
-  async signOut():Promise<void>{const result=await this.client.auth.signOut();fail(result.error);}
+  async signOut():Promise<void>{const result=await withAuthDeadline(this.client.auth.signOut({scope:'local'}));if(result.error)throw asAuthFlowError(result.error);}
   onAuthChange(callback:()=>void):()=>void {const {data}=this.client.auth.onAuthStateChange(()=>{setTimeout(callback,0);});return ()=>data.subscription.unsubscribe();}
 }
-let browserClient:{url:string;key:string;client:SupabaseClient}|undefined;
+let browserClient:{url:string;key:string;client:SupabaseClient;startup:AuthStartup}|undefined;
 export function createSupabaseRepository():HQRepository {
   const {url,publishableKey:key}=publicSupabaseConfig();
-  if(!url||!key)throw new Error('Configuración incompleta: faltan la URL o la clave publicable de Supabase.');
-  const parsed=new URL(url);if(parsed.protocol!=='https:'&&!['localhost','127.0.0.1'].includes(parsed.hostname))throw new Error('La URL de Supabase debe usar HTTPS.');
-  if(!key.startsWith('sb_publishable_'))throw new Error('Usa una clave publicable de Supabase. Nunca una clave secreta ni service_role.');
+  if(!url||!key)throw new HQAuthFlowError(authIssue('configuration'));
+  let parsed:URL;try{parsed=new URL(url);}catch{throw new HQAuthFlowError(authIssue('configuration'));}
+  if(parsed.protocol!=='https:'&&!['localhost','127.0.0.1'].includes(parsed.hostname))throw new HQAuthFlowError(authIssue('configuration'));
+  if(!key.startsWith('sb_publishable_'))throw new HQAuthFlowError(authIssue('configuration'));
   // Reuse one browser Auth client so React remounts cannot exchange the PKCE code twice.
-  if(typeof window!=='undefined'&&browserClient?.url===url&&browserClient.key===key)return new SupabaseRepository(browserClient.client);
-  const client=createClient(url,key,{auth:{flowType:'pkce',persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-  if(typeof window!=='undefined')browserClient={url,key,client};
-  return new SupabaseRepository(client);
+  if(typeof window!=='undefined'&&browserClient?.url===url&&browserClient.key===key)return new SupabaseRepository(browserClient.client,browserClient.startup);
+  const client=createClient(url,key,{auth:{flowType:'pkce',persistSession:true,autoRefreshToken:true,detectSessionInUrl:true},global:{fetch:createBoundedAuthFetch(fetch)}});
+  const startup=createAuthStartup({initialize:()=>client.auth.initialize(),...(typeof window==='undefined'?{}:{readHref:()=>window.location.href,replacePath:(path:string)=>window.history.replaceState(window.history.state,'',path)})});
+  if(typeof window!=='undefined')browserClient={url,key,client,startup};
+  return new SupabaseRepository(client,startup);
 }

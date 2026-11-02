@@ -9,16 +9,17 @@ Verified on 2026-11-02 in the isolated Codex development environment. These resu
 | Locked application dependency installation | Passed (`npm ci`); browser/SQL test dependencies subsequently pinned in the lockfile. |
 | `npm run lint` | Passed, no errors or warnings. |
 | `npm run typecheck` | Passed. |
-| `npm test` | 69 tests passed; 0 failed, skipped, cancelled, or todo. |
+| `npm test` | 80 tests passed; 0 failed, skipped, cancelled, or todo. |
 | `npm run test:security` | 129 PostgreSQL assertions passed: 44 historical, 36 roles/progress, 14 Drive metadata, 35 private registration. |
 | `npm run build` | Passed with Next.js 16.4.3, including TypeScript and server routes. |
-| Browser QA | 16 scenarios, 187 assertions passed; 0 failed. |
+| Browser QA | 17 scenarios, 202 assertions passed; 0 failed. |
+| Authentication protocol browser QA | 8 scenarios passed using the real Supabase SDK with intercepted HTTP fixtures; no live OAuth claim. |
 | Browser isolation | 0 uncaught browser errors, external HTTP attempts, or live Drive API calls in the demo suite. |
 | Source preservation | Historical Supabase migration and public project configuration remain byte-identical to the uploaded HQ2 baseline. |
 
 Node.js 24.19.0, npm 11.9.0, React 19.2.4, Playwright 1.62.1, system Chromium, and PGlite 0.5.13 were used. SQL tests execute only in an isolated in-memory PostgreSQL engine and roll back their fixtures. No test account or schema was created in the hosted project.
 
-The runner uses `--test-isolation=none` because this environment's default Node/tsx child isolation initially reported file-level results instead of individual tests. The final run explicitly executed all 69 named tests. Restricted subprocess execution also prevented the first development bind and Next TypeScript child process; authorized execution resolved those environment failures without disabling type checks or package verification.
+The runner uses `--test-isolation=none` because this environment's default Node/tsx child isolation initially reported file-level results instead of individual tests. The final run explicitly executed all 80 named tests. Restricted subprocess execution also prevented the first development bind and Next TypeScript child process; authorized execution resolved those environment failures without disabling type checks or package verification.
 
 ## Browser behavior verified
 
@@ -29,10 +30,20 @@ The runner uses `--test-isolation=none` because this environment's default Node/
 - Current/Future Feed, both account selectors, collaborative post membership, and screenshot-reference image dialogs work.
 - A 26 MiB local file uploads into the browser session, previews, downloads with matching SHA-256, attaches to a post, and unlinks without removing its original. Offline Drive protocol tests also exercise 32 MiB resumable uploads using injected provider responses.
 - No horizontal overflow at 320, 390, 768, and 1440 CSS pixels. Reduced-motion behavior and mobile keyboard controls passed. This is Chromium emulation, not physical iPhone/Safari verification.
-- Normal `/` and an empty `/auth/callback/` show a safe signed-out screen, a Google action, a disabled ChatGPT action, and no password/signup form or authenticated workspace data. OAuth was not clicked; no real login is claimed.
+- Normal `/` and an empty `/auth/callback/` show a safe signed-out screen, a Google action, a disabled ChatGPT action, and no password/signup form or authenticated workspace data. The demo suite does not click OAuth. The separate authentication suite clicks the real Google action and verifies the SDK against intercepted HTTP responses; no live login is claimed.
 - Preview access tests verify default-deny pages/assets, production rejection of the local bypass, expiring/tamper-resistant sessions, secure cookie attributes, and compatibility with bearer-authenticated media APIs.
 
 Machine-readable browser results are in [browser-qa-results.json](browser-qa-results.json). The reproducible runner is `scripts/browser-qa.cjs`; run `npm run test:browser` with the loopback development server active. Screenshots are indexed in [evidence/README.md](evidence/README.md).
+
+## Login → Calendar follow-up
+
+The compact weekly-intention disclosure preserves editing and reload persistence while bringing the first mobile post from approximately y=845 to y=613 at 390px width. The calendar now provides an explicit no-match state and reset, accessible New post naming and scheduling descriptions, count-labeled Month days that open Today, and a visible mobile sign-out control. Fresh authenticated identities start on Calendar/Week; successful callbacks return to the root route.
+
+Auth recovery distinguishes normal signed-out state from cancellation, expired codes, unverified/uninvited identities, network failures, and configuration errors. SDK initialization completes before callback parameters are removed. Failed callbacks cannot silently reuse an old session. Bounded Auth requests (including response bodies), SDK import, and workspace loads prevent indefinite loading. Sign-out revokes the current session; pending pre-logout loads cannot restore UI data.
+
+The separate `npm run test:auth-browser` runner drives the real Supabase browser SDK with HTTP-intercepted synthetic identities: desktop/mobile Google → PKCE S256 → verifier-matched token exchange → verified membership → Calendar/Week, reload/session restoration, sign-out, metadata privilege forgery denial, unverified identity denial, cancelled/orphan/expired callbacks, and retry after connection failure. It never seeds authentication storage or calls a live provider. See [auth-browser-results.json](auth-browser-results.json). Six additional captures use explicitly synthetic fixtures; none represent live private content.
+
+One initial new calendar test failed because its unscoped Today locator matched both date navigation and the segmented control. The locator was corrected to the Calendar view group; all 17 scenarios then passed. An initial auth denial selector also needed updating to the redesigned heading; the complete protocol suite was rerun after correction. No assertions were disabled.
 
 ## Integration and delivery limits
 

@@ -98,7 +98,37 @@ async function saveReport() {
     equal(await page.locator('.hq3-month-post').count(), 1, 'Search filters cards');
     await page.getByRole('textbox', {name: 'Search posts', exact: true}).fill('no-match-qa');
     equal(await page.locator('.hq3-month-post').count(), 0, 'Search handles no matches');
+    check(await page.getByRole('heading', {name: 'No posts match these filters.', exact: true}).isVisible(), 'No-match state explains active filters');
+    await page.getByRole('button', {name: 'Clear filters', exact: true}).click();
+    equal(await page.getByRole('textbox', {name: 'Search posts', exact: true}).inputValue(), '', 'Clear filters resets search');
+    check(await page.locator('.hq3-month-post').count() > 0, 'Clear filters restores scheduled posts');
   });
+
+  await scenario('Mobile calendar starts with usable content and preserves weekly intention', async page => {
+    await page.goto(`${BASE}/preview/`); await ready(page);
+    await page.emulateMedia({reducedMotion: 'reduce'});
+    const card = await page.locator('.hq3-post').first().boundingBox();
+    const nav = await page.locator('.hq3-mobile-nav').boundingBox();
+    check(card.y + 100 < nav.y, 'First card title and scheduling context appear above floating navigation');
+    check(await page.getByRole('button', {name: 'New post', exact: true}).isVisible(), 'Mobile create button has an accessible name');
+    check(await page.locator('.hq3-post-open').first().getAttribute('aria-describedby'), 'Post exposes time, accounts, and status as accessible description');
+    const intention = page.locator('.hq3-intention');
+    equal(await intention.getAttribute('open'), null, 'Weekly intention starts compact');
+    await intention.locator('summary').click();
+    await intention.getByRole('button', {name: 'Edit intention', exact: true}).click();
+    await page.getByRole('textbox', {name: 'Weekly intention', exact: true}).fill('Keep the shared creative direction.');
+    await page.getByRole('button', {name: 'Save intention', exact: true}).click();
+    await page.getByRole('status').filter({hasText: 'Weekly intention saved.'}).waitFor();
+    await page.reload(); await ready(page);
+    check(await intention.locator('summary').getByText('Keep the shared creative direction.', {exact: true}).isVisible(), 'Weekly intention remains editable and persists');
+    await pressView(page, 'Month');
+    const populatedDay = page.locator('.hq3-day-heading button').filter({has: page.locator('.hq3-day-count')}).first();
+    check((await populatedDay.boundingBox()).height >= 44, 'Month day target is at least 44px tall');
+    check(/, [1-9][0-9]* posts?$/.test(await populatedDay.getAttribute('aria-label')), 'Month day announces date and post count');
+    await populatedDay.click();
+    equal(await page.getByRole('group', {name: 'Calendar view', exact: true}).getByRole('button', {name: 'Today', exact: true}).getAttribute('aria-pressed'), 'true', 'Month day opens full Today cards');
+    check(await page.locator('.hq3-post').count() > 0, 'Selected day reveals full scheduling information');
+  }, {viewport: {width: 390, height: 844}, isMobile: true, hasTouch: true});
 
   await scenario('Caption persistence, review notes, and keyboard dialog behavior', async page => {
     await page.goto(`${BASE}/preview/`); await ready(page);
