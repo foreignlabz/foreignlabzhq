@@ -1,0 +1,8 @@
+# Historical static-export configuration is preserved in docs/recovered/netlify.toml.
+# This app now requires a Node server for private preview access and Drive routes.
+# Fail closed until a private, authenticated development host is explicitly configured.
+[build]
+  command = "node -e \"console.error('Automatic deployment disabled: configure an authorized private development preview.'); process.exit(1)\""
+
+[build.environment]
+  NODE_VERSION = "24"

@@ -1,0 +1,196 @@
+{
+  "executedAt": "2026-11-02T17:59:28.296Z",
+  "baseUrl": "http://127.0.0.1:3000",
+  "browser": "Chromium /usr/bin/chromium, Playwright",
+  "mode": "Demo fixtures and unauthenticated entry routes only; external HTTP requests blocked",
+  "filter": null,
+  "assertions": 187,
+  "passed": 16,
+  "failed": 0,
+  "scenarios": [
+    {
+      "name": "Signed-out access at /",
+      "status": "passed",
+      "assertions": 13,
+      "durationMs": 538,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Signed-out access at /auth/callback/",
+      "status": "passed",
+      "assertions": 13,
+      "durationMs": 525,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Calendar views, filtering, and search",
+      "status": "passed",
+      "assertions": 12,
+      "durationMs": 1837,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Caption persistence, review notes, and keyboard dialog behavior",
+      "status": "passed",
+      "assertions": 37,
+      "durationMs": 3768,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Manager task progress and read-only permissions",
+      "status": "passed",
+      "assertions": 14,
+      "durationMs": 2774,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "New post and accessible rescheduling",
+      "status": "passed",
+      "assertions": 6,
+      "durationMs": 2470,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Drag scheduling preserves time and progress",
+      "status": "passed",
+      "assertions": 7,
+      "durationMs": 1674,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Feed modes, collaborative posts, and reference dialog",
+      "status": "passed",
+      "assertions": 13,
+      "durationMs": 1824,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Large local media upload, download integrity, attachment, and unlink",
+      "status": "passed",
+      "assertions": 12,
+      "durationMs": 3842,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Reduced motion and mobile keyboard controls",
+      "status": "passed",
+      "assertions": 8,
+      "durationMs": 535,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Responsive overflow at 320px",
+      "status": "passed",
+      "assertions": 11,
+      "durationMs": 1895,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Responsive overflow at 390px",
+      "status": "passed",
+      "assertions": 11,
+      "durationMs": 1887,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Responsive overflow at 768px",
+      "status": "passed",
+      "assertions": 11,
+      "durationMs": 1965,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Responsive overflow at 1440px",
+      "status": "passed",
+      "assertions": 11,
+      "durationMs": 2110,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Screenshots desktop",
+      "status": "passed",
+      "assertions": 4,
+      "durationMs": 5300,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    },
+    {
+      "name": "Screenshots mobile",
+      "status": "passed",
+      "assertions": 4,
+      "durationMs": 3434,
+      "blockedExternalRequests": [],
+      "liveApiRequests": [],
+      "browserErrors": [],
+      "error": null
+    }
+  ],
+  "screenshots": [
+    "docs/evidence/login-desktop.png",
+    "docs/evidence/login-signed-out-desktop.png",
+    "docs/evidence/calendar-week-desktop.png",
+    "docs/evidence/calendar-today-desktop.png",
+    "docs/evidence/calendar-month-desktop.png",
+    "docs/evidence/post-detail-desktop.png",
+    "docs/evidence/feed-future-desktop.png",
+    "docs/evidence/feed-current-desktop.png",
+    "docs/evidence/media-library-desktop.png",
+    "docs/evidence/login-mobile.png",
+    "docs/evidence/login-signed-out-mobile.png",
+    "docs/evidence/calendar-week-mobile.png",
+    "docs/evidence/calendar-today-mobile.png",
+    "docs/evidence/calendar-month-mobile.png",
+    "docs/evidence/post-detail-mobile.png",
+    "docs/evidence/feed-future-mobile.png",
+    "docs/evidence/feed-current-mobile.png",
+    "docs/evidence/media-library-mobile.png"
+  ],
+  "limitations": [
+    "Browser emulation is not physical iPhone/Safari validation.",
+    "Live Google OAuth, deployed Supabase RLS, and live Google Drive are not exercised by this suite."
+  ]
+}

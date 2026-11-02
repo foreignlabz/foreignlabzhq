@@ -1,0 +1,2 @@
+# Preserve supplied historical evidence verbatim, including terminal CR output.
+docs/recovered/** -whitespace

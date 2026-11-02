@@ -1,0 +1,30 @@
+[
+  {
+    "archive": "manager-progress-source-handoff.zip",
+    "sha256": "c9f64fd00c2c2818526d3bffa33e9d22c8c2a6b8f94e2a5f4b58494d2cd0f173",
+    "files": 15,
+    "expanded_bytes": 178364,
+    "staging_path": "/workspace/hq3-recovery/manager-progress-source-handoff"
+  },
+  {
+    "archive": "HQ3-responsive-retry.zip",
+    "sha256": "fabda8c428b9c6396f6ebca336abf1308b2715bb71523f1a73abab98a6ef322f",
+    "files": 71,
+    "expanded_bytes": 606925,
+    "staging_path": "/workspace/hq3-recovery/HQ3-responsive-retry"
+  },
+  {
+    "archive": "4EIGN-HQ-3.0-feed-preview.zip",
+    "sha256": "2fbaf99888f36e235ca0bd1c9969ec95524a94ac272049cff4649596883f4aca",
+    "files": 90,
+    "expanded_bytes": 840085,
+    "staging_path": "/workspace/hq3-recovery/4EIGN-HQ-3.0-feed-preview"
+  },
+  {
+    "archive": "4EIGN-HQ-v2-source.zip",
+    "sha256": "23302d9d579b4f86c7ceb0219a363d3bd690bc3be9de019e16d54d0ab179cd40",
+    "files": 45,
+    "expanded_bytes": 593551,
+    "staging_path": "/workspace/hq3-recovery/4EIGN-HQ-v2-source"
+  }
+]

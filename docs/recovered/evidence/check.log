@@ -1,0 +1,84 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> 4eign-hq-v2@0.1.0 check
+> npm run lint && npm run typecheck && npm test && npm run build
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> 4eign-hq-v2@0.1.0 lint
+> eslint .
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> 4eign-hq-v2@0.1.0 typecheck
+> tsc --noEmit
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> 4eign-hq-v2@0.1.0 test
+> node --import tsx --test tests/*.test.ts
+
+✔ production denies absent verified user (1.337986ms)
+✔ production denies unapproved account regardless of metadata (0.344259ms)
+✔ production refuses ambiguous memberships (0.163406ms)
+✔ production obtains role from trusted membership, not metadata (0.180302ms)
+✔ partial and secret-key configuration fail closed (0.380113ms)
+✔ backend migrations are versioned and all exposed application tables enable RLS (1.530626ms)
+✔ backend authorization is live membership-based, never user-editable JWT metadata (0.301635ms)
+✔ backend definer helpers stay private, identity-bound, and explicitly granted (0.394214ms)
+✔ backend blocks approval forgery, tenant movement, and post creator impersonation (0.156977ms)
+✔ backend references scope accounts, comments, and media to the same workspace (0.146481ms)
+✔ private storage is bounded, tenant-scoped, and immutable (0.195114ms)
+✔ SQL role-switch verification is transactionally rolled back and covers revocation (0.265089ms)
+✔ Puerto Rico date boundaries and local roundtrip (20.233945ms)
+✔ calendar is Monday-first and 42 cells (0.277949ms)
+✔ collaborator cannot approve, publish or edit approved content (0.87552ms)
+✔ rejects invalid references, dangerous links, media and empty comments (0.536058ms)
+✔ demo persists posts/comments and denies owner-only operations (2.200836ms)
+✔ unscheduled database posts render safely (0.161524ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 296.732392
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> 4eign-hq-v2@0.1.0 build
+> next build
+
+▲ Next.js 16.4.3 (Turbopack)
+✓ Running next.config.ts took 27ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1571ms
+  Running TypeScript ...
+  Finished TypeScript in 2.6s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/4) ...
+  Generating static pages using 5 workers (1/4) 
+  Generating static pages using 5 workers (2/4) 
+  Generating static pages using 5 workers (3/4) 
+✓ Generating static pages using 5 workers (4/4) in 363ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+└ ○ /demo
+
+
+○  (Static)  prerendered as static content
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

@@ -1,0 +1,33 @@
+{
+  "name": "4eign-hq-v2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "next build",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test --test-isolation=none tests/*.test.ts",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build",
+    "start": "next start --hostname 127.0.0.1",
+    "test:security": "node supabase/tests/run-embedded.mjs",
+    "test:browser": "node scripts/browser-qa.cjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.118.0",
+    "next": "16.4.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.13",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "16.4.3",
+    "playwright": "1.62.1",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}
